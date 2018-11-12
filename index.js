@@ -70,7 +70,7 @@ app.get('/api/persons', (request, response) => {
   Person
     .find({})
     .then(people => {
-      response.json(people.map(formatPerson))
+      response.json(people.map(Person.format))
     })
     .catch(error => {
       console.log(error)
@@ -82,7 +82,7 @@ app.get('/api/persons/:id', (request, response) => {
   .findById(request.params.id)
   .then(person => {
     if (person){
-      response.json(formatPerson(person))
+      response.json(Person.format(person))
     } else {
       response.status(404).end()
     }
@@ -129,7 +129,7 @@ app.post('/api/persons', (request, response) => {
       person
       .save()
       .then(savedPerson => {
-        response.json(formatPerson(savedPerson))
+        response.json(Person.format(savedPerson))
     
       })
     
@@ -156,7 +156,7 @@ app.put('/api/persons/:id', (request, response) => {
   Person
     .findByIdAndUpdate(request.params.id, person, { new: true } )
     .then(updatedPerson => {
-      response.json(formatPerson(updatedPerson))
+      response.json(Person.format(updatedPerson))
     })
     .catch(error => {
       console.log(error)
